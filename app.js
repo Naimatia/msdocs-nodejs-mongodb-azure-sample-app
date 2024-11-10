@@ -15,7 +15,9 @@ async function getApp() {
   
   try {
     // Ensure the database is connected before starting the app
-    await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true,
+    await mongoose.connect(mongoUri, { 
+      poolSize: 10,  // Adjust based on load
+      useNewUrlParser: true, useUnifiedTopology: true,
       socketTimeoutMS: 45000,  // Set socket timeout to 45 seconds
   connectTimeoutMS: 45000  // Set connection timeout to 45 seconds
      });
