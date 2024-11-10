@@ -10,16 +10,17 @@ const { format } = require("date-fns");
 var indexRouter = require("./routes/index");
 
 async function getApp() {
-
   // Database
-  // Use AZURE_COSMOS_CONNECTIONSTRING if available, otherwise fall back to MONGODB_URI
-  const mongoUri = process.env.AZURE_COSMOS_CONNECTIONSTRING || process.env.MONGODB_URI; // For App Service, change to process.env.AZURE_COSMOS_CONNECTIONSTRING || process.env.MONGODB_URI;
-
-  mongoose.connect(mongoUri).then(() => {
+  const mongoUri = process.env.AZURE_COSMOS_CONNECTIONSTRING || process.env.MONGODB_URI;
+  
+  try {
+    // Ensure the database is connected before starting the app
+    await mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true });
     console.log('Connected to database');
-  }).catch((err) => {
+  } catch (err) {
     console.error('Error connecting to database:', err);
-  });
+    process.exit(1); // Exit process if unable to connect to DB
+  }
 
   var app = express();
 
@@ -52,17 +53,16 @@ async function getApp() {
 
   // error handler
   app.use(function (err, req, res, next) {
-    // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get("env") === "development" ? err : {};
 
-    // render the error page
     res.status(err.status || 500);
     res.render("error");
   });
 
   return app;
 }
+
 /**
  * Normalize a port into a number, string, or false.
  */
