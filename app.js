@@ -15,7 +15,6 @@ async function getApp() {
   
   try {
     await mongoose.connect(mongoUri, {
-      poolSize: 20,  // Increase pool size if under heavy load
       useNewUrlParser: true,
       useUnifiedTopology: true,
       bufferCommands: false,
