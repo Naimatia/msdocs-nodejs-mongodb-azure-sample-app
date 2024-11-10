@@ -25,7 +25,7 @@ jobs:
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip .
+        run: zip -r release.zip ./*  # Zips the contents of the current directory
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -47,13 +47,13 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
-      
+        run: unzip release.zip -d ./deployment  # Unzips to a specific directory
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'msdocs-expressjs-mongodb-135'
           slot-name: 'Production'
-          package: .
+          package: ./deployment  # Ensure this is the correct path to the unzipped contents
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3BFC5F82B49F465C8E1DE5416D966C4B }}
