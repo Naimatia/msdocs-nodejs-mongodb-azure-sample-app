@@ -11,7 +11,7 @@ var indexRouter = require("./routes/index");
 
 async function getApp() {
   // Database
-  const mongoUri = https://msdocs-expressjs-mongodb-13-server.mongo.cosmos.azure.com:443/;
+  const mongoUri = process.env.AZURE_COSMOS_CONNECTIONSTRING || process.env.MONGODB_URI;
   
   try {
     await mongoose.connect(mongoUri, {
