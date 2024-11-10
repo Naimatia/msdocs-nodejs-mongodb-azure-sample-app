@@ -18,6 +18,7 @@ async function getApp() {
       poolSize: 20,  // Increase pool size if under heavy load
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      bufferCommands: false,
       socketTimeoutMS: 60000,  // Increase socket timeout to 60 seconds
       connectTimeoutMS: 60000,  // Increase connection timeout to 60 seconds
       serverSelectionTimeoutMS: 60000  // Increase server selection timeout to 60 seconds
