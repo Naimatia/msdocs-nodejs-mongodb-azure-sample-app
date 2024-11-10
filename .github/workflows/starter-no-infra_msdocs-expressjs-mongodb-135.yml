@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - msdocs-expressjs-mongodb-135
 
 on:
@@ -17,9 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-        env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true  # Forces Node 20 for this step only
-           
+
       - name: npm install, build, and test
         run: |
           npm install
@@ -27,7 +28,7 @@ jobs:
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./*  # Zips the contents of the current directory
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -49,13 +50,13 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip -d ./deployment  # Unzips to a specific directory
-
+        run: unzip release.zip
+      
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'msdocs-expressjs-mongodb-135'
           slot-name: 'Production'
-          package: ./deployment  # Ensure this is the correct path to the unzipped contents
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3BFC5F82B49F465C8E1DE5416D966C4B }}
+          package: .
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_E8AC47F3BAF94BEDB68A76795FF29244 }}
