@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     })
     .catch((err) => {
       console.error("Error fetching tasks:", err);
-      res.send('Sorry! Something went wrong.');
+      res.send('Sorry! Something went wrong. 1');
     });
 });
 
@@ -36,7 +36,7 @@ router.post('/addTask', function(req, res, next) {
     })
     .catch((err) => {
       console.error("Error adding task:", err);
-      res.send('Sorry! Something went wrong.');
+      res.send('Sorry! Something went wrong. 2');
     });
 });
 
@@ -50,7 +50,7 @@ router.post('/completeTask', function(req, res, next) {
     })
     .catch((err) => {
       console.error("Error completing task:", err);
-      res.send('Sorry! Something went wrong.');
+      res.send('Sorry! Something went wrong.3');
     });
 });
 
@@ -64,7 +64,7 @@ router.post('/deleteTask', function(req, res, next) {
     })
     .catch((err) => {
       console.error("Error deleting task:", err);
-      res.send('Sorry! Something went wrong.');
+      res.send('Sorry! Something went wrong.4');
     });
 });
 
