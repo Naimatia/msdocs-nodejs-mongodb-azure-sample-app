@@ -14,18 +14,20 @@ async function getApp() {
   const mongoUri = process.env.AZURE_COSMOS_CONNECTIONSTRING || process.env.MONGODB_URI;
   
   try {
-    // Ensure the database is connected before starting the app
-    await mongoose.connect(mongoUri, { 
-      poolSize: 10,  // Adjust based on load
-      useNewUrlParser: true, useUnifiedTopology: true,
-      socketTimeoutMS: 45000,  // Set socket timeout to 45 seconds
-  connectTimeoutMS: 45000  // Set connection timeout to 45 seconds
-     });
+    await mongoose.connect(mongoUri, {
+      poolSize: 20,  // Increase pool size if under heavy load
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      socketTimeoutMS: 60000,  // Increase socket timeout to 60 seconds
+      connectTimeoutMS: 60000,  // Increase connection timeout to 60 seconds
+      serverSelectionTimeoutMS: 60000  // Increase server selection timeout to 60 seconds
+    });
     console.log('Connected to database');
   } catch (err) {
     console.error('Error connecting to database:', err);
-    process.exit(1); // Exit process if unable to connect to DB
+    process.exit(1);
   }
+
 
   var app = express();
 
